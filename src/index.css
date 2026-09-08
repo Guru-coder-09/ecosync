@@ -1,0 +1,179 @@
+/* src/index.css */
+/* Global styles for EcoSync DPI — GoI aesthetic */
+
+/* ── Font Loading ─────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── CSS Custom Properties ────────────────────────────────────────────────── */
+:root {
+  --navy: #1A237E;
+  --saffron: #FF6F00;
+  --eco-green: #00695C;
+  --ndma-red: #B71C1C;
+  --font-sans: 'Noto Sans', system-ui, -apple-system, sans-serif;
+  --font-hindi: 'Noto Sans Devanagari', 'Noto Sans', sans-serif;
+}
+
+/* ── Base Reset ───────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0;
+  background-color: #F8FAFC;
+}
+
+/* ── GoI Typography Utilities ─────────────────────────────────────────────── */
+@layer utilities {
+  .font-hindi {
+    font-family: var(--font-hindi);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Print: show QR prominently, hide nav */
+  @media print {
+    .print\:hidden { display: none !important; }
+    .print\:block  { display: block !important; }
+  }
+}
+
+/* ── GoI Component Patterns ───────────────────────────────────────────────── */
+@layer components {
+  /* Official government portal card */
+  .goi-card {
+    @apply bg-white rounded-xl border border-gray-200 shadow-sm p-5;
+  }
+
+  /* Primary action button (saffron) */
+  .btn-primary {
+    @apply px-5 py-2.5 bg-saffron-900 hover:bg-saffron-700 text-white font-bold
+           rounded-xl transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  /* Navy secondary button */
+  .btn-navy {
+    @apply px-5 py-2.5 bg-navy-900 hover:bg-navy-800 text-white font-semibold
+           rounded-xl transition-colors text-sm;
+  }
+
+  /* Danger button (NDMA red) */
+  .btn-danger {
+    @apply px-5 py-2.5 bg-red-700 hover:bg-red-800 text-white font-bold
+           rounded-xl transition-colors text-sm;
+  }
+
+  /* Form input */
+  .form-input {
+    @apply w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-sm
+           focus:ring-2 focus:ring-navy-500 focus:border-navy-500 outline-none
+           transition-colors bg-white;
+  }
+
+  /* Status badge base */
+  .status-badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold;
+  }
+
+  /* GoI tricolor stripe (decorative header element) */
+  .goi-stripe {
+    @apply h-1.5 w-full;
+    background: linear-gradient(to right,
+      #FF9933 0%,   /* Saffron */
+      #FF9933 33.3%,
+      #FFFFFF 33.3%,  /* White */
+      #FFFFFF 66.6%,
+      #138808 66.6%,  /* India Green */
+      #138808 100%
+    );
+  }
+
+  /* NDMA header gradient */
+  .ndma-header {
+    background: linear-gradient(135deg, #7F0000 0%, #B71C1C 40%, #1A237E 100%);
+  }
+}
+
+/* ── Leaflet overrides ────────────────────────────────────────────────────── */
+.leaflet-container {
+  font-family: var(--font-sans);
+  z-index: 1;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+}
+
+.leaflet-popup-tip {
+  background: white;
+}
+
+/* ── QR Display animations ────────────────────────────────────────────────── */
+@keyframes qr-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.qr-refreshing {
+  animation: qr-pulse 1s ease-in-out infinite;
+}
+
+/* ── Scanner dark theme ───────────────────────────────────────────────────── */
+.scanner-result-overlay {
+  animation: slideUpFull 0.25s ease-out;
+}
+
+@keyframes slideUpFull {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* ── Accessibility ────────────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 3px solid var(--navy);
+  outline-offset: 2px;
+}
+
+/* Skip to main content link */
+.skip-link {
+  @apply sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4
+         focus:z-50 focus:px-4 focus:py-2 focus:bg-navy-900 focus:text-white
+         focus:rounded-lg focus:shadow-lg;
+}
+
+/* ── Scrollbar styling ────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track { background: #F1F5F9; }
+::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+
+/* ── Print styles ────────────────────────────────────────────────────────── */
+@media print {
+  nav, .no-print { display: none !important; }
+  body { background: white; }
+  .print-permit-card {
+    border: 2px solid #1A237E;
+    border-radius: 12px;
+    padding: 20px;
+  }
+}
