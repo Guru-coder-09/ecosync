@@ -100,7 +100,7 @@ export const PassView = () => {
       {/* Gov Header */}
       <div className="bg-[#1A237E] text-white text-center py-4 border-b border-indigo-900">
         <p className="text-xs text-blue-300 mb-1">🏛 भारत सरकार · GOVERNMENT OF INDIA</p>
-        <h1 className="text-lg font-extrabold">Digital E-Pass — ஈ-பாஸ்</h1>
+        <h1 className="text-lg font-extrabold">Digital E-Pass</h1>
       </div>
 
       <div className="max-w-2xl mx-auto px-6 py-8">

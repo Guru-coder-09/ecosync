@@ -134,7 +134,7 @@ export const PermitApply = () => {
             {/* Vehicle Reg */}
             <div>
               <label className="block text-sm font-bold text-gray-700 mb-1.5">
-                <span className="flex items-center gap-1.5"><Car className="w-3.5 h-3.5" /> வாகன பதிவு எண் / Vehicle Registration Number <span className="text-red-500">*</span></span>
+                <span className="flex items-center gap-1.5"><Car className="w-3.5 h-3.5" /> Vehicle Registration Number <span className="text-red-500">*</span></span>
               </label>
               <input
                 type="text"
@@ -149,7 +149,7 @@ export const PermitApply = () => {
             {/* Passengers */}
             <div>
               <label className="block text-sm font-bold text-gray-700 mb-1.5">
-                <span className="flex items-center gap-1.5"><Users className="w-3.5 h-3.5" /> மொத்த பயணிகளின் எண்ணிக்கை / Number of Passengers <span className="text-red-500">*</span></span>
+                <span className="flex items-center gap-1.5"><Users className="w-3.5 h-3.5" /> Number of Passengers <span className="text-red-500">*</span></span>
               </label>
               <div className="flex items-center gap-4">
                 <button
@@ -171,7 +171,7 @@ export const PermitApply = () => {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-bold text-gray-700 mb-1.5">
-                  <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5" /> உள்நுழைவு நாள் / Date of Entry <span className="text-red-500">*</span></span>
+                  <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5" /> Date of Entry <span className="text-red-500">*</span></span>
                 </label>
                 <input
                   type="date"
@@ -184,7 +184,7 @@ export const PermitApply = () => {
               </div>
               <div>
                 <label className="block text-sm font-bold text-gray-700 mb-1.5">
-                  <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" /> நுழைவு நேரம் / Entry Time</span>
+                  <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" /> Entry Time</span>
                 </label>
                 <select
                   value={visitTime}
@@ -201,7 +201,7 @@ export const PermitApply = () => {
             {/* Origin — From where */}
             <div className="relative">
               <label className="block text-sm font-bold text-gray-700 mb-1.5">
-                <span className="flex items-center gap-1.5"><Navigation className="w-3.5 h-3.5" /> எங்கிருந்து வருகிறீர்கள் / Travelling From (City / State) <span className="text-red-500">*</span></span>
+                <span className="flex items-center gap-1.5"><Navigation className="w-3.5 h-3.5" /> Travelling From (City / State) <span className="text-red-500">*</span></span>
               </label>
               <input
                 type="text"

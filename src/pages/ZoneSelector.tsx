@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthRoleStore } from '../stores/authRoleStore';
-import { LogOut, Leaf, Clock, ChevronRight, FileText } from 'lucide-react';
+import { LogOut, Leaf, Clock, ChevronRight, FileText, Car } from 'lucide-react';
 import { api, PermitRecord } from '../lib/api';
 
-// Zone cards with background gradient colors and icons
+// Sleeker, modern card data
 const ZONE_CARDS = [
   {
     id: 2,
     name: 'Nilgiris / Ooty',
     state: 'Tamil Nadu',
     emoji: '🌿',
-    gradient: 'from-emerald-800 to-green-600',
+    theme: 'emerald',
     description: 'The Queen of Hill Stations',
-    quota: '3,000 vehicles/day',
+    quota: '3,000 / day',
     status: 'OPEN',
   },
   {
@@ -21,9 +21,9 @@ const ZONE_CARDS = [
     name: 'Kodaikanal',
     state: 'Tamil Nadu',
     emoji: '🌫',
-    gradient: 'from-slate-700 to-blue-700',
+    theme: 'blue',
     description: 'Princess of Hill Stations',
-    quota: '2,500 vehicles/day',
+    quota: '2,500 / day',
     status: 'OPEN',
   },
   {
@@ -31,9 +31,9 @@ const ZONE_CARDS = [
     name: 'Mudumalai Tiger Reserve',
     state: 'Tamil Nadu',
     emoji: '🐘',
-    gradient: 'from-amber-800 to-yellow-700',
+    theme: 'amber',
     description: 'Wildlife Sanctuary & Biosphere',
-    quota: '500 vehicles/day',
+    quota: '500 / day',
     status: 'OPEN',
   },
   {
@@ -41,9 +41,9 @@ const ZONE_CARDS = [
     name: 'Shimla & Himachal',
     state: 'Himachal Pradesh',
     emoji: '🏔',
-    gradient: 'from-sky-700 to-indigo-600',
+    theme: 'indigo',
     description: 'Summer Capital of British India',
-    quota: '4,000 vehicles/day',
+    quota: '4,000 / day',
     status: 'RESTRICTED',
   },
   {
@@ -51,9 +51,9 @@ const ZONE_CARDS = [
     name: 'Rohtang & Solang Valley',
     state: 'Himachal Pradesh',
     emoji: '❄️',
-    gradient: 'from-blue-900 to-slate-600',
+    theme: 'cyan',
     description: 'High-Altitude Snow Pass (3,978m)',
-    quota: '1,200 vehicles/day',
+    quota: '1,200 / day',
     status: 'RESTRICTED',
   },
   {
@@ -61,9 +61,9 @@ const ZONE_CARDS = [
     name: 'Corbett National Park',
     state: 'Uttarakhand',
     emoji: '🌳',
-    gradient: 'from-green-800 to-teal-700',
+    theme: 'teal',
     description: 'India\'s First National Park',
-    quota: '800 vehicles/day',
+    quota: '800 / day',
     status: 'OPEN',
   },
 ];
@@ -127,71 +127,66 @@ export const ZoneSelector = () => {
       </nav>
 
       {/* Government Header Band */}
-      <div className="bg-[#1A237E] text-white text-center py-5 border-b border-indigo-900">
-        <p className="text-xs text-blue-300 mb-1">🏛 भारत सरकार · GOVERNMENT OF INDIA &nbsp;|&nbsp; Ministry of Environment, Forest &amp; Climate Change</p>
-        <h1 className="text-xl font-extrabold tracking-tight">EcoSync E-Pass Portal — ஈ-பாஸ் போர்டல்</h1>
-        <p className="text-sm text-blue-300 mt-1">Ecologically Sensitive Zone (ESZ) Entry Permit System</p>
+      <div className="bg-white border-b border-gray-200 py-6 text-center shadow-sm">
+        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Government of India · Ministry of Environment</p>
+        <h1 className="text-2xl font-extrabold text-[#1A237E] tracking-tight">EcoSync E-Pass Portal</h1>
+        <p className="text-sm text-gray-500 mt-1">Ecologically Sensitive Zone (ESZ) Entry Permit System</p>
       </div>
 
       <div className="max-w-5xl mx-auto px-6 py-8">
         {/* Destination chooser title */}
-        <div className="text-center mb-8">
-          <p className="text-gray-500 text-sm mb-1">நீங்கள் செல்ல விரும்பும் இடம்</p>
-          <h2 className="text-2xl font-extrabold text-gray-800">Choose your Destination</h2>
-          <p className="text-gray-500 text-sm mt-1">Select an Ecologically Sensitive Zone to apply for an entry permit</p>
+        <div className="mb-6 flex items-end justify-between">
+          <div>
+            <h2 className="text-xl font-extrabold text-gray-800">Choose your Destination</h2>
+            <p className="text-gray-500 text-sm mt-1">Select a zone to apply for an entry permit</p>
+          </div>
         </div>
 
-        {/* Zone Cards Grid */}
-        <div className="grid grid-cols-3 gap-5 mb-8">
+        {/* Zone Cards Grid - Modern Clean Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
           {ZONE_CARDS.map((zone) => (
             <button
               key={zone.id}
               onClick={() => handleZoneClick(zone)}
-              className={`relative overflow-hidden rounded-xl text-left text-white shadow-lg transition-all hover:-translate-y-1 hover:shadow-xl active:scale-95 ${
+              className={`group flex flex-col bg-white text-left rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden ${
                 zone.status === 'LOCKDOWN' ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
               }`}
             >
-              {/* Gradient background */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${zone.gradient} opacity-90`} />
-
-              {/* Noise texture overlay */}
-              <div className="absolute inset-0 opacity-10"
-                style={{
-                  backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
-                }}
-              />
-
-              <div className="relative p-5 min-h-[140px] flex flex-col justify-between">
-                <div>
-                  <span className="text-3xl">{zone.emoji}</span>
-                  <div className="mt-2">
-                    <p className="font-extrabold text-lg leading-tight">{zone.name}</p>
-                    <p className="text-xs text-white/70 mt-0.5">{zone.state}</p>
-                    <p className="text-xs text-white/60 mt-1">{zone.description}</p>
+              {/* Top Accent Bar */}
+              <div className={`h-2 w-full bg-${zone.theme}-500`} />
+              
+              <div className="p-5 flex-1">
+                <div className="flex justify-between items-start mb-4">
+                  <div className="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center text-2xl border border-gray-100 group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                    {zone.emoji}
                   </div>
-                </div>
-                <div className="flex items-center justify-between mt-3">
-                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                    zone.status === 'OPEN' ? 'bg-green-500/30 text-green-100' :
-                    zone.status === 'RESTRICTED' ? 'bg-orange-500/30 text-orange-100' :
-                    'bg-red-500/30 text-red-100'
+                  <span className={`text-[10px] font-extrabold px-2.5 py-1 rounded-full border ${
+                    zone.status === 'OPEN' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
+                    zone.status === 'RESTRICTED' ? 'bg-orange-50 text-orange-700 border-orange-200' :
+                    'bg-red-50 text-red-700 border-red-200'
                   }`}>
                     {zone.status}
                   </span>
-                  <span className="text-[10px] text-white/60">{zone.quota}</span>
                 </div>
+                
+                <h3 className="text-lg font-extrabold text-gray-900 leading-tight group-hover:text-[#1A237E] transition-colors">{zone.name}</h3>
+                <p className="text-xs font-bold text-indigo-600 mt-1">{zone.state}</p>
+                <p className="text-sm text-gray-500 mt-2 line-clamp-2">{zone.description}</p>
               </div>
 
-              {/* Arrow */}
-              <div className="absolute top-3 right-3 opacity-60">
-                <ChevronRight className="w-4 h-4" />
+              {/* Bottom Info Bar */}
+              <div className="bg-gray-50 px-5 py-3 border-t border-gray-100 flex justify-between items-center">
+                <span className="text-xs text-gray-500 font-semibold flex items-center gap-1.5">
+                  <Car className="w-3.5 h-3.5 text-gray-400" /> Max: {zone.quota}
+                </span>
+                <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-[#1A237E] transition-colors group-hover:translate-x-0.5" />
               </div>
             </button>
           ))}
         </div>
 
-        {/* Info notice — matching TN ePass */}
-        <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 flex gap-3 mb-6 text-sm text-amber-800">
+        {/* Info notice */}
+        <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 flex gap-3 mb-6 text-sm text-blue-800 shadow-sm">
           <span className="text-lg">ℹ️</span>
           <p>
             If your District Administration and RTO have approved an exemption pass for a local vehicle,
@@ -199,52 +194,62 @@ export const ZoneSelector = () => {
           </p>
         </div>
 
-        {/* Action Buttons */}
-        <div className="grid grid-cols-2 gap-4">
+        {/* Action Buttons - Modern sleek variants */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <button
             onClick={handlePreviousPasses}
-            className="bg-purple-700 hover:bg-purple-800 text-white rounded-xl p-5 text-center font-bold transition-colors shadow"
+            className="bg-white border border-gray-200 hover:border-[#1A237E] hover:bg-indigo-50/50 rounded-xl p-4 flex items-center gap-4 transition-all shadow-sm text-left group"
           >
-            <FileText className="w-6 h-6 mx-auto mb-2" />
-            <p className="text-sm">முந்தைய பாஸ்கள்</p>
-            <p className="text-xs font-normal opacity-80 mt-0.5">Previous Passes &amp; Pending Applications</p>
+            <div className="w-12 h-12 rounded-full bg-indigo-50 flex items-center justify-center flex-shrink-0 group-hover:bg-indigo-100 transition-colors">
+              <FileText className="w-5 h-5 text-[#1A237E]" />
+            </div>
+            <div>
+              <p className="text-sm font-extrabold text-gray-900 group-hover:text-[#1A237E]">Previous Passes</p>
+              <p className="text-xs text-gray-500 mt-0.5">View your pending and approved applications</p>
+            </div>
           </button>
 
           <button
             onClick={() => navigate('/tourist')}
-            className="bg-teal-600 hover:bg-teal-700 text-white rounded-xl p-5 text-center font-bold transition-colors shadow"
+            className="bg-white border border-gray-200 hover:border-teal-600 hover:bg-teal-50/50 rounded-xl p-4 flex items-center gap-4 transition-all shadow-sm text-left group"
           >
-            <Clock className="w-6 h-6 mx-auto mb-2" />
-            <p className="text-sm">Live Zone Status</p>
-            <p className="text-xs font-normal opacity-80 mt-0.5">Real-time Capacity &amp; Weather Map</p>
+            <div className="w-12 h-12 rounded-full bg-teal-50 flex items-center justify-center flex-shrink-0 group-hover:bg-teal-100 transition-colors">
+              <Clock className="w-5 h-5 text-teal-600" />
+            </div>
+            <div>
+              <p className="text-sm font-extrabold text-gray-900 group-hover:text-teal-700">Live Zone Status</p>
+              <p className="text-xs text-gray-500 mt-0.5">Real-time Capacity &amp; Weather Map</p>
+            </div>
           </button>
         </div>
 
         {/* Previous Passes Drawer */}
         {showPrevious && (
-          <div className="mt-6 bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-            <div className="flex items-center justify-between px-5 py-3 border-b border-gray-100">
-              <h3 className="font-bold text-gray-800 text-sm">Your Previous Passes</h3>
-              <button onClick={() => setShowPrevious(false)} className="text-gray-400 hover:text-gray-600 text-xs">✕ Close</button>
+          <div className="mt-6 bg-white rounded-xl border border-gray-200 shadow-lg overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-300">
+            <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100 bg-gray-50/50">
+              <h3 className="font-extrabold text-gray-800 text-sm flex items-center gap-2">
+                <FileText className="w-4 h-4 text-indigo-600"/> Your Previous Passes
+              </h3>
+              <button onClick={() => setShowPrevious(false)} className="text-gray-400 hover:text-gray-700 text-xs font-bold transition-colors">✕ Close</button>
             </div>
             <div className="p-4">
               {loadingPermits ? (
-                <p className="text-sm text-gray-400 text-center py-4">Loading passes…</p>
+                <p className="text-sm text-gray-400 text-center py-6">Loading passes…</p>
               ) : permits.length === 0 ? (
-                <div className="text-center py-6">
-                  <p className="text-gray-400 text-sm">No previous passes found.</p>
-                  <p className="text-gray-300 text-xs mt-1">Apply for a new permit by choosing a destination above.</p>
+                <div className="text-center py-8">
+                  <p className="text-gray-500 font-medium text-sm">No previous passes found.</p>
+                  <p className="text-gray-400 text-xs mt-1">Apply for a new permit by choosing a destination above.</p>
                 </div>
               ) : (
-                <div className="space-y-2">
+                <div className="space-y-3">
                   {permits.slice(0, 5).map((p) => (
-                    <div key={p.id} className="flex items-center justify-between bg-gray-50 rounded-lg px-4 py-3 border border-gray-100">
+                    <div key={p.id} className="flex items-center justify-between bg-white rounded-xl p-4 border border-gray-100 shadow-sm hover:border-indigo-200 transition-colors">
                       <div>
-                        <p className="text-sm font-bold text-gray-800">{p.vehicle_reg_number}</p>
-                        <p className="text-xs text-gray-500">{p.zone_name} · {p.passenger_count} passengers</p>
+                        <p className="text-sm font-extrabold text-gray-800 font-mono tracking-wide">{p.vehicle_reg_number}</p>
+                        <p className="text-xs text-gray-500 mt-0.5 font-medium">{p.zone_name} <span className="mx-1 text-gray-300">•</span> {p.passenger_count} passengers</p>
                       </div>
-                      <span className={`text-xs font-bold px-2 py-1 rounded-full ${
-                        p.status === 'ISSUED' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'
+                      <span className={`text-[10px] font-extrabold px-3 py-1.5 rounded-full uppercase tracking-wider ${
+                        p.status === 'ISSUED' ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-gray-50 text-gray-600 border border-gray-200'
                       }`}>
                         {p.status}
                       </span>
