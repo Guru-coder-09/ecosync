@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Proposed Solution - Past Systems vs EcoSync</title>
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  }
+  body {
+    background: #FFFFFF;
+    color: #1E293B;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 35px 55px 0px 55px;
+    position: relative;
+  }
+
+  /* Top Official Template Header */
+  .template-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #E2E8F0;
+  }
+  .hexavox-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #DC2626;
+    border-radius: 50px;
+    padding: 4px 22px;
+    color: #DC2626;
+    font-size: 22px;
+    font-weight: 700;
+    font-family: 'Georgia', serif;
+  }
+  .center-brand {
+    font-size: 38px;
+    font-weight: 900;
+    color: #0A196F;
+    letter-spacing: 2px;
+  }
+  .sih-logo-block {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .sih-icon-brain {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #F97316 0%, #10B981 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .sih-text {
+    font-size: 14px;
+    font-weight: 800;
+    color: #0F172A;
+    line-height: 1.15;
+    text-transform: uppercase;
+    text-align: right;
+  }
+
+  /* Slide Main Title */
+  .slide-title-block {
+    margin-bottom: 18px;
+  }
+  .slide-main-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: #0284C7;
+    text-decoration: underline;
+    text-decoration-color: #0284C7;
+    text-underline-offset: 5px;
+    margin-bottom: 4px;
+  }
+  .slide-sub-title {
+    font-size: 14.5px;
+    color: #64748B;
+    font-weight: 500;
+  }
+
+  /* Main 2-Section Split: Left (Past Systems & Failures) vs Right (EcoSync Solution & Fixes) */
+  .main-split {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 22px;
+    flex: 1;
+    margin-bottom: 22px;
+  }
+
+  /* LEFT CONTAINER: Past Systems Tried & Why They Failed */
+  .left-container {
+    background: #FFF5F5;
+    border: 1.5px solid #FCA5A5;
+    border-radius: 16px;
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 15px rgba(220, 38, 38, 0.04);
+  }
+  .section-tag {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 14px;
+  }
+  .tag-past { color: #DC2626; }
+  .tag-ecosync { color: #0284C7; }
+
+  .past-systems-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+  }
+  .past-card {
+    background: #FFFFFF;
+    border: 1px solid #FECACA;
+    border-radius: 12px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .past-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .past-name {
+    font-size: 14.5px;
+    font-weight: 800;
+    color: #991B1B;
+  }
+  .past-badge {
+    background: #FEE2E2;
+    color: #B91C1C;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 6px;
+    text-transform: uppercase;
+  }
+  .past-mechanism {
+    font-size: 12px;
+    color: #475569;
+    line-height: 1.35;
+  }
+  .past-flaw {
+    background: #FEF2F2;
+    border-left: 3px solid #EF4444;
+    padding: 4px 8px;
+    font-size: 11.5px;
+    color: #B91C1C;
+    font-weight: 600;
+    margin-top: 3px;
+    border-radius: 0 4px 4px 0;
+  }
+
+  /* RIGHT CONTAINER: EcoSync Proposed Solution & The Exact Fixes */
+  .right-container {
+    background: #F0FDF4;
+    border: 1.5px solid #86EFAC;
+    border-radius: 16px;
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 15px rgba(22, 163, 74, 0.04);
+  }
+
+  .fixes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    flex: 1;
+  }
+  .fix-card {
+    background: #FFFFFF;
+    border: 1px solid #BBF7D0;
+    border-radius: 12px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .fix-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .fix-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: #DCFCE7;
+    color: #16A34A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+  .fix-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: #14532D;
+  }
+  .fix-desc {
+    font-size: 12px;
+    color: #334155;
+    line-height: 1.4;
+  }
+  .fix-benefit {
+    margin-top: 6px;
+    background: #F0FDF4;
+    border-left: 3px solid #22C55E;
+    padding: 4px 8px;
+    font-size: 11px;
+    color: #15803D;
+    font-weight: 700;
+    border-radius: 0 4px 4px 0;
+  }
+
+  /* Bottom Contrast Summary Bar */
+  .contrast-strip {
+    background: #0F172A;
+    color: #FFFFFF;
+    border-radius: 12px;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+  }
+  .contrast-text {
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .contrast-text strong {
+    color: #38BDF8;
+  }
+  .contrast-pill {
+    background: #0284C7;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+  }
+
+  /* Official Bottom Template Blue Footer */
+  .footer-bar {
+    background: #0070BA;
+    color: #FFFFFF;
+    height: 38px;
+    margin-left: -55px;
+    margin-right: -55px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 55px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+
+  <!-- Top Header Exactly Matching SIH Template -->
+  <div class="template-header">
+    <div class="hexavox-logo">Hexavox</div>
+    <div class="center-brand">ECOSYNC</div>
+    <div class="sih-logo-block">
+      <div class="sih-icon-brain">💡</div>
+      <div class="sih-text">
+        Smart India<br>Hackathon 2026
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide Heading with Bullet & Underline -->
+  <div class="slide-title-block">
+    <h2 class="slide-main-title">• Proposed Solution: Past Systems Tried vs What EcoSync Fixes</h2>
+    <p class="slide-sub-title">Analyzing historical policy failures across Himalayan and Western Ghat corridors to build an offline-first, tamper-proof DPI.</p>
+  </div>
+
+  <!-- Main 2-Section Grid -->
+  <div class="main-split">
+
+    <!-- LEFT: Past Systems Tried & Why They Failed -->
+    <div class="left-container">
+      <div class="section-tag tag-past">
+        <span>❌</span> Past Systems Tried &amp; Why They Failed
+      </div>
+
+      <div class="past-systems-list">
+        <!-- System 1 -->
+        <div class="past-card">
+          <div class="past-title-row">
+            <span class="past-name">1. Static PDF &amp; Web Portals (Rohtang / Ooty)</span>
+            <span class="past-badge">Severely Abused</span>
+          </div>
+          <p class="past-mechanism">Online portals issue static PDF permits with static QR codes.</p>
+          <div class="past-flaw">
+            <strong>Why it failed:</strong> Tourists took screenshots, forwarded WhatsApp PDFs, or bought cloned passes from local touts at 10x markups.
+          </div>
+        </div>
+
+        <!-- System 2 -->
+        <div class="past-card">
+          <div class="past-title-row">
+            <span class="past-name">2. Manual Paper Toll Registers</span>
+            <span class="past-badge">Human Bottleneck</span>
+          </div>
+          <p class="past-mechanism">Guards physically hand-write vehicle numbers and passenger counts at barriers.</p>
+          <div class="past-flaw">
+            <strong>Why it failed:</strong> 2-3 minutes per vehicle caused 14-hour traffic jams in Lonavala and Kullu. Zero real-time data sync with district collectors.
+          </div>
+        </div>
+
+        <!-- System 3 -->
+        <div class="past-card">
+          <div class="past-title-row">
+            <span class="past-name">3. Cloud-Only App Portals (Firebase/Supabase)</span>
+            <span class="past-badge">Network Failure</span>
+          </div>
+          <p class="past-mechanism">Required guards' handheld scanners to hit cloud servers for verification.</p>
+          <div class="past-flaw">
+            <strong>Why it failed:</strong> Himalayan deadzones (zero 4G/5G) broke scanner apps. Toll barriers had to be opened manually, collapsing quotas.
+          </div>
+        </div>
+
+        <!-- System 4 -->
+        <div class="past-card">
+          <div class="past-title-row">
+            <span class="past-name">4. Macro-Only Town Level Limits</span>
+            <span class="past-badge">Zero Micro-Control</span>
+          </div>
+          <p class="past-mechanism">Cap placed on the entire hill station (e.g. Mahabaleshwar / Shimla).</p>
+          <div class="past-flaw">
+            <strong>Why it failed:</strong> Tourists congregated simultaneously at singular micro-spots (e.g., Tiger Point, Mall Road), triggering landslides &amp; stampedes.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: How EcoSync Fixes Each Flaw -->
+    <div class="right-container">
+      <div class="section-tag tag-ecosync">
+        <span>✅</span> The EcoSync Architecture: What We Are Fixing
+      </div>
+
+      <div class="fixes-grid">
+        <!-- Fix 1 -->
+        <div class="fix-card">
+          <div class="fix-head">
+            <div class="fix-icon">🔒</div>
+            <h4 class="fix-title">Dynamic Rotating Ed25519 QR</h4>
+          </div>
+          <p class="fix-desc">
+            Replaces static PDFs with self-rotating QR tokens using <strong>30-second epoch-salted hashes</strong> signed by the Authority Private Key.
+          </p>
+          <div class="fix-benefit">
+            <strong>The Fix:</strong> Screenshots &amp; forwarded passes expire within 30s. Stops tout black-marketing permanently.
+          </div>
+        </div>
+
+        <!-- Fix 2 -->
+        <div class="fix-card">
+          <div class="fix-head">
+            <div class="fix-icon">📶</div>
+            <h4 class="fix-title">100% Offline Edge Verification</h4>
+          </div>
+          <p class="fix-desc">
+            Checkposts verify passes mathematically using pre-distributed <strong>Ed25519 public keys</strong>—without needing active cellular connectivity.
+          </p>
+          <div class="fix-benefit">
+            <strong>The Fix:</strong> Sub-300ms verification works seamlessly in deep Himalayan network blindspots.
+          </div>
+        </div>
+
+        <!-- Fix 3 -->
+        <div class="fix-card">
+          <div class="fix-head">
+            <div class="fix-icon">🚗</div>
+            <h4 class="fix-title">NHAI FASTag RFID Integration</h4>
+          </div>
+          <p class="fix-desc">
+            Integrates directly into existing National Electronic Toll Collection (NETC) RFID transponders for automatic barrier lifts.
+          </p>
+          <div class="fix-benefit">
+            <strong>The Fix:</strong> Zero stop-and-go manual paper logging. Eliminates 14-hr highway gridlocks with ₹0 new toll hardware.
+          </div>
+        </div>
+
+        <!-- Fix 4 -->
+        <div class="fix-card">
+          <div class="fix-head">
+            <div class="fix-icon">🎯</div>
+            <h4 class="fix-title">Micro-Spot Granularity &amp; Yield</h4>
+          </div>
+          <p class="fix-desc">
+            Geofences individual sensitive tourist spots (viewpoints, waterfalls) with <strong>20% carrying-capacity discount vouchers</strong> to divert crowds.
+          </p>
+          <div class="fix-benefit">
+            <strong>The Fix:</strong> Balances tourist density across secondary attractions before ecological damage occurs.
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Contrast Strip -->
+      <div class="contrast-strip">
+        <span class="contrast-text">
+          <strong>Outcome:</strong> From Fragmented &amp; Easily Cloned Passes ➔ To Decentralized, Offline-First DPI Governance.
+        </span>
+        <span class="contrast-pill">DPI Innovation</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Official Bottom Blue Footer Bar -->
+  <div class="footer-bar">
+    <span>@SIH Idea submission- Template</span>
+    <span>2</span>
+  </div>
+
+</body>
+</html>

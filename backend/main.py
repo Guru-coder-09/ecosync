@@ -87,8 +87,10 @@ def init_db():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             zone_id INTEGER,
             vehicle_reg_number TEXT,
-            vehicle_type TEXT DEFAULT 'Car / SUV',
+            vehicle_type TEXT DEFAULT 'Tourist Vehicle',
             passenger_count INTEGER,
+            origin_from TEXT DEFAULT '',
+            visit_datetime TEXT DEFAULT '',
             slot_start INTEGER,
             slot_end INTEGER,
             status TEXT,
@@ -209,7 +211,9 @@ class PermitPayload(BaseModel):
     zone_id: int
     vehicle_reg_number: str
     passenger_count: int
-    vehicle_type: Optional[str] = 'Private Vehicle'
+    vehicle_type: Optional[str] = 'Tourist Vehicle'
+    origin_from: Optional[str] = ''
+    visit_datetime: Optional[str] = ''
 
 @app.get("/api/categories-summary")
 def get_categories_summary(db: sqlite3.Connection = Depends(get_db)):
@@ -362,26 +366,51 @@ def fastag_webhook(payload: FastagWebhookPayload, db: sqlite3.Connection = Depen
 def sign_permit(payload: PermitPayload, db: sqlite3.Connection = Depends(get_db)):
     cursor = db.cursor()
     now = int(time.time())
+
+    # Migrate old DB: add columns if they don't exist yet
+    try:
+        cursor.execute("ALTER TABLE permits ADD COLUMN origin_from TEXT DEFAULT ''")
+        db.commit()
+    except Exception:
+        pass
+    try:
+        cursor.execute("ALTER TABLE permits ADD COLUMN visit_datetime TEXT DEFAULT ''")
+        db.commit()
+    except Exception:
+        pass
+
     cursor.execute("""
-        INSERT INTO permits (zone_id, vehicle_reg_number, vehicle_type, passenger_count, slot_start, slot_end, status)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-    """, (payload.zone_id, payload.vehicle_reg_number, payload.vehicle_type or 'Private Vehicle', payload.passenger_count, now, now + 86400, "ISSUED"))
+        INSERT INTO permits (zone_id, vehicle_reg_number, vehicle_type, passenger_count, origin_from, visit_datetime, slot_start, slot_end, status)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    """, (
+        payload.zone_id,
+        payload.vehicle_reg_number,
+        payload.vehicle_type or 'Tourist Vehicle',
+        payload.passenger_count,
+        payload.origin_from or '',
+        payload.visit_datetime or '',
+        now,
+        now + 86400,
+        "ISSUED"
+    ))
     permit_id = cursor.lastrowid
     db.commit()
-    
+
     # Generate Ed25519 signed JWT with 30s TOTP salt concept
     token_payload = {
         "permit_id": permit_id,
         "zone_id": payload.zone_id,
         "vehicle_reg": payload.vehicle_reg_number,
         "passengers": payload.passenger_count,
+        "origin_from": payload.origin_from or '',
+        "visit_datetime": payload.visit_datetime or '',
         "exp": now + 30,
         "iat": now,
         "salt": os.urandom(8).hex()
     }
-    
+
     token = jwt.encode(token_payload, private_key_bytes, algorithm="EdDSA")
-    
+
     return {
         "permit_id": permit_id,
         "token": token,

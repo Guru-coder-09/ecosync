@@ -224,18 +224,27 @@ export const api = {
     }
   },
 
-  async signPermit(zoneId: number, vehicleReg: string, passengerCount: number, vehicleType: string = 'Private Vehicle') {
+  async signPermit(zoneId: number, vehicleReg: string, passengerCount: number, vehicleType: string = 'Tourist Vehicle', originFrom: string = '', visitDatetime: string = '') {
     try {
       const res = await fetch(`${API_BASE}/sign-permit`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ zone_id: zoneId, vehicle_reg_number: vehicleReg, passenger_count: passengerCount, vehicle_type: vehicleType })
+        body: JSON.stringify({
+          zone_id: zoneId,
+          vehicle_reg_number: vehicleReg,
+          passenger_count: passengerCount,
+          vehicle_type: vehicleType,
+          origin_from: originFrom,
+          visit_datetime: visitDatetime,
+        })
       });
       if (!res.ok) throw new Error('Sign permit failed');
       return await res.json();
     } catch (e) {
       console.warn('Backend unavailable, generating mock token', e);
-      return { permit_id: 999, token: "mock.jwt.token", public_key: "mock_pub_key" };
+      // Generate a realistic-looking permit ID for demo
+      const mockId = Math.floor(Math.random() * 9000) + 1000;
+      return { permit_id: mockId, token: `ecosync.demo.${Date.now()}.${zoneId}`, public_key: "mock_pub_key" };
     }
   }
 };

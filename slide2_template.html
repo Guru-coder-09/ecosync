@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Slide 2 - Problem Statement & Urgent Ground Reality</title>
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  }
+  body {
+    background: radial-gradient(circle at 10% 20%, #17112E 0%, #0B0F2A 50%, #060919 100%);
+    color: #FFFFFF;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 45px 70px 35px 70px;
+    position: relative;
+  }
+
+  /* Tricolor accent bar */
+  .tricolor-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    display: flex;
+  }
+  .tricolor-bar .orange { flex: 1; background: #FF671F; }
+  .tricolor-bar .white { flex: 1; background: #FFFFFF; }
+  .tricolor-bar .green { flex: 1; background: #046A38; }
+
+  /* Header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 25px;
+  }
+  .header-left .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    color: #F87171;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .header-left h1 {
+    font-size: 42px;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+    background: linear-gradient(135deg, #FFFFFF 0%, #E2E8F0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .header-left p {
+    color: #94A3B8;
+    font-size: 16px;
+    margin-top: 5px;
+  }
+  .header-right .stat-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    padding: 8px 18px;
+    border-radius: 25px;
+    color: #FCA5A5;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  /* 4 Problem Vectors Grid */
+  .problems-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+
+  .prob-card {
+    background: #111736;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    padding: 22px 20px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+    position: relative;
+    overflow: hidden;
+  }
+  .prob-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+  }
+  .p-red::before { background: #EF4444; }
+  .p-orange::before { background: #F97316; }
+  .p-amber::before { background: #FBBF24; }
+  .p-purple::before { background: #A855F7; }
+
+  .prob-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+  .prob-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+  }
+  .p-red .prob-icon { background: rgba(239, 68, 68, 0.18); color: #F87171; }
+  .p-orange .prob-icon { background: rgba(249, 115, 22, 0.18); color: #FB923C; }
+  .p-amber .prob-icon { background: rgba(251, 191, 36, 0.18); color: #FCD34D; }
+  .p-purple .prob-icon { background: rgba(168, 85, 247, 0.18); color: #C084FC; }
+
+  .prob-num {
+    font-size: 13px;
+    font-weight: 900;
+    color: #64748B;
+    font-family: monospace;
+  }
+
+  .prob-title {
+    font-size: 19px;
+    font-weight: 800;
+    color: #F8FAFC;
+    margin-bottom: 8px;
+    line-height: 1.25;
+  }
+  .prob-desc {
+    font-size: 13.5px;
+    color: #94A3B8;
+    line-height: 1.45;
+    margin-bottom: 16px;
+    flex: 1;
+  }
+
+  .impact-box {
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    padding: 10px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  .impact-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    color: #64748B;
+    display: block;
+    margin-bottom: 3px;
+  }
+  .impact-val {
+    font-size: 12.5px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .p-red .impact-val { color: #FCA5A5; }
+  .p-orange .impact-val { color: #FDBA74; }
+  .p-amber .impact-val { color: #FDE68A; }
+  .p-purple .impact-val { color: #E9D5FF; }
+
+  /* Ground Reality & Bottleneck Comparison Section */
+  .comparison-section {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 24px;
+    flex: 1;
+    margin-bottom: 20px;
+  }
+
+  .case-studies {
+    background: #131938;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .section-heading {
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: #38BDF8;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .cases-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+  }
+  .case-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 14px;
+  }
+  .case-loc {
+    font-size: 14px;
+    font-weight: 800;
+    color: #FFFFFF;
+    margin-bottom: 4px;
+  }
+  .case-stat {
+    font-size: 20px;
+    font-weight: 900;
+    color: #F87171;
+    font-family: monospace;
+    margin-bottom: 4px;
+  }
+  .case-text {
+    font-size: 11.5px;
+    color: #94A3B8;
+    line-height: 1.35;
+  }
+
+  /* Current System vs Need Card */
+  .need-card {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(30, 27, 75, 0.6) 100%);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 18px;
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .flaw-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .flaw-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    color: #E2E8F0;
+    line-height: 1.35;
+  }
+  .flaw-cross {
+    color: #EF4444;
+    font-weight: 900;
+    font-size: 14px;
+    margin-top: 1px;
+  }
+
+  /* Bottom Takeaway Banner */
+  .bottom-banner {
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 14px;
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .banner-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .banner-alert {
+    font-size: 18px;
+  }
+  .banner-text {
+    font-size: 14px;
+    color: #FEE2E2;
+    font-weight: 600;
+  }
+  .banner-text strong {
+    color: #FFFFFF;
+    font-weight: 800;
+  }
+  .banner-cta {
+    background: #EF4444;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 800;
+    padding: 6px 16px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+
+  <!-- Tricolor Accent Bar -->
+  <div class="tricolor-bar">
+    <div class="orange"></div>
+    <div class="white"></div>
+    <div class="green"></div>
+  </div>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <div class="tag">Problem Statement &bull; Ground Reality</div>
+      <h1>The Carrying Capacity Crisis in Ecologically Sensitive Zones</h1>
+      <p>Unregulated tourism inflow, manual toll bottlenecks, and network blindspots threaten India's fragile biospheres.</p>
+    </div>
+    <div class="header-right">
+      <div class="stat-pill">
+        <span>⚠️</span> NGT &amp; MoEFCC Mandated Quota Violation Risk
+      </div>
+    </div>
+  </div>
+
+  <!-- 4 Core Problem Pillars -->
+  <div class="problems-grid">
+
+    <!-- Card 1 -->
+    <div class="prob-card p-red">
+      <div class="prob-top">
+        <div class="prob-icon">⛰️</div>
+        <span class="prob-num">VECTOR 01</span>
+      </div>
+      <h3 class="prob-title">Ecological Degradation &amp; Landslides</h3>
+      <p class="prob-desc">
+        Fragile Himalayan and Western Ghat roads frequently exceed scientific carrying capacity by 300-500%, triggering catastrophic slope collapses, flash floods, and waste overload.
+      </p>
+      <div class="impact-box">
+        <span class="impact-label">Critical Consequence</span>
+        <span class="impact-val">Violates Environment Protection Act, 1986 carrying limits.</span>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="prob-card p-orange">
+      <div class="prob-top">
+        <div class="prob-icon">🚗</div>
+        <span class="prob-num">VECTOR 02</span>
+      </div>
+      <h3 class="prob-title">Paralyzing Highway Gridlocks</h3>
+      <p class="prob-desc">
+        Manual entry gates cause 6 to 12-hour vehicular tailbacks in narrow ghat passes (e.g. Rohtang, Lonavala, Ooty), stalling emergency medical transit and polluting fragile valleys.
+      </p>
+      <div class="impact-box">
+        <span class="impact-label">Critical Consequence</span>
+        <span class="impact-val">4.2+ hrs average vehicle dwell time idling on sensitive hill climbs.</span>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="prob-card p-amber">
+      <div class="prob-top">
+        <div class="prob-icon">📶</div>
+        <span class="prob-num">VECTOR 03</span>
+      </div>
+      <h3 class="prob-title">Zero-Connectivity Mountain Blindspots</h3>
+      <p class="prob-desc">
+        Checkposts in dense forests and high-altitude altitudes have zero cellular network coverage. Standard cloud verification apps (Supabase, Firebase) completely fail to load.
+      </p>
+      <div class="impact-box">
+        <span class="impact-label">Critical Consequence</span>
+        <span class="impact-val">Guards revert to paper registers, allowing forged permits to pass.</span>
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="prob-card p-purple">
+      <div class="prob-top">
+        <div class="prob-icon">🎫</div>
+        <span class="prob-num">VECTOR 04</span>
+      </div>
+      <h3 class="prob-title">Permit Black-Marketing &amp; Static Pass Fraud</h3>
+      <p class="prob-desc">
+        Existing static PDF passes and WhatsApp screenshots are cloned, forwarded, and sold by local touts at 10x markups with zero traceability or revocation mechanism.
+      </p>
+      <div class="impact-box">
+        <span class="impact-label">Critical Consequence</span>
+        <span class="impact-val">Authorities have zero verified real-time headcount visibility.</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Real Ground Reality & Comparison Section -->
+  <div class="comparison-section">
+
+    <!-- Left: Historical Realities -->
+    <div class="case-studies">
+      <div class="section-heading">
+        <span>📍</span> Case Studies: The Unregulated Inflow Reality (2023-2025)
+      </div>
+      <div class="cases-row">
+        <div class="case-card">
+          <div class="case-loc">Rohtang &amp; Atal Tunnel</div>
+          <div class="case-stat">28,000+</div>
+          <div class="case-text">Vehicles flooded into Solang Valley in a single weekend against 3,000 safe capacity limit.</div>
+        </div>
+        <div class="case-card">
+          <div class="case-loc">Lonavala &amp; Khandala Ghat</div>
+          <div class="case-stat">14-Hour</div>
+          <div class="case-text">Monsoon gridlock trapping 45,000 tourists due to uncoordinated checkpost barriers.</div>
+        </div>
+        <div class="case-card">
+          <div class="case-loc">Mudumalai &amp; Nilgiris</div>
+          <div class="case-stat">Madras HC</div>
+          <div class="case-text">High Court intervened to mandate e-passes due to acute wildlife corridor disturbance.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: The Systematic Void -->
+    <div class="need-card">
+      <div class="section-heading" style="color: #F87171;">
+        <span>❌</span> The Systemic Gap Today
+      </div>
+      <ul class="flaw-list">
+        <li class="flaw-item">
+          <span class="flaw-cross">✕</span>
+          <span><strong>No Cross-Modal Telemetry:</strong> Railways, buses, and private cars operate in data silos.</span>
+        </li>
+        <li class="flaw-item">
+          <span class="flaw-cross">✕</span>
+          <span><strong>Zero Dynamic Yield Rerouting:</strong> No economic incentive for tourists to divert to less-crowded spots.</span>
+        </li>
+        <li class="flaw-item">
+          <span class="flaw-cross">✕</span>
+          <span><strong>No Emergency Containment:</strong> Disaster authorities cannot instantly lockdown gates during hazards.</span>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Bottom Banner -->
+  <div class="bottom-banner">
+    <div class="banner-left">
+      <span class="banner-alert">🚨</span>
+      <span class="banner-text">
+        <strong>The Core Challenge:</strong> How do we enforce scientific carrying capacity with <strong>sub-second speed</strong>, <strong>zero hardware cost</strong>, and <strong>100% offline cryptographic integrity</strong>?
+      </span>
+    </div>
+    <div class="banner-cta">Enter EcoSync DPI</div>
+  </div>
+
+</body>
+</html>

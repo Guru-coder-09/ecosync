@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Slide 6 - EcoSync Prototype Walkthrough</title>
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  }
+  body {
+    background: #0B0F2A;
+    color: #FFFFFF;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 40px 60px 30px 60px;
+    position: relative;
+  }
+
+  /* Tricolor accent bar */
+  .tricolor-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    display: flex;
+  }
+  .tricolor-bar .orange { flex: 1; background: #FF671F; }
+  .tricolor-bar .white { flex: 1; background: #FFFFFF; }
+  .tricolor-bar .green { flex: 1; background: #046A38; }
+
+  /* Header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 25px;
+  }
+  .header-left .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 103, 31, 0.15);
+    border: 1px solid rgba(255, 103, 31, 0.4);
+    color: #FF9E66;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .header-left h1 {
+    font-size: 44px;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+    background: linear-gradient(135deg, #FFFFFF 0%, #B0C4DE 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .header-left p {
+    color: #8E9BB0;
+    font-size: 17px;
+    margin-top: 6px;
+  }
+  .header-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+  }
+  .header-right .live-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    color: #34D399;
+    padding: 8px 18px;
+    border-radius: 25px;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .live-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #10B981;
+    box-shadow: 0 0 10px #10B981;
+  }
+  .header-right .url {
+    color: #64748B;
+    font-size: 13px;
+    font-family: monospace;
+  }
+
+  /* 3-Column Content Layout */
+  .grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+    flex: 1;
+    margin-bottom: 20px;
+  }
+
+  .card {
+    background: #131938;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  }
+
+  .card.card-tourist { border-top: 4px solid #10B981; }
+  .card.card-guard { border-top: 4px solid #F59E0B; }
+  .card.card-authority { border-top: 4px solid #3B82F6; }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .card-title-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+  .card-tourist .card-icon { background: rgba(16, 185, 129, 0.2); color: #34D399; }
+  .card-guard .card-icon { background: rgba(245, 158, 11, 0.2); color: #FBBF24; }
+  .card-authority .card-icon { background: rgba(59, 130, 246, 0.2); color: #60A5FA; }
+
+  .card-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #F8FAFC;
+  }
+  .card-pill {
+    font-size: 11px;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+  }
+  .card-tourist .card-pill { background: rgba(16, 185, 129, 0.15); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.3); }
+  .card-guard .card-pill { background: rgba(245, 158, 11, 0.15); color: #FBBF24; border: 1px solid rgba(245, 158, 11, 0.3); }
+  .card-authority .card-pill { background: rgba(59, 130, 246, 0.15); color: #60A5FA; border: 1px solid rgba(59, 130, 246, 0.3); }
+
+  /* Screenshot preview container */
+  .screenshot-frame {
+    width: 100%;
+    height: 290px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    margin-bottom: 16px;
+    background: #000;
+    position: relative;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+  }
+  .screenshot-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  /* Feature bullets */
+  .feature-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+  }
+  .feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13.5px;
+    color: #CBD5E1;
+    line-height: 1.35;
+  }
+  .feature-bullet {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 800;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .card-tourist .feature-bullet { background: rgba(16, 185, 129, 0.2); color: #34D399; }
+  .card-guard .feature-bullet { background: rgba(245, 158, 11, 0.2); color: #FBBF24; }
+  .card-authority .feature-bullet { background: rgba(59, 130, 246, 0.2); color: #60A5FA; }
+
+  .feature-item strong {
+    color: #FFFFFF;
+    font-weight: 700;
+  }
+
+  /* Bottom highlight strip */
+  .bottom-strip {
+    background: linear-gradient(90deg, rgba(26, 31, 110, 0.7) 0%, rgba(13, 71, 161, 0.7) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 14px;
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .highlight-badge {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .highlight-badge .star {
+    font-size: 20px;
+    color: #FFB300;
+  }
+  .highlight-title {
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #FFB300;
+  }
+  .highlight-text {
+    font-size: 14px;
+    color: #E2E8F0;
+    margin-left: 6px;
+  }
+  .highlight-stats {
+    display: flex;
+    gap: 32px;
+  }
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  .stat-val {
+    font-size: 20px;
+    font-weight: 900;
+    color: #38BDF8;
+    font-family: monospace;
+  }
+  .stat-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    color: #94A3B8;
+    letter-spacing: 0.8px;
+  }
+</style>
+</head>
+<body>
+
+  <!-- Tri-color National DPI Bar -->
+  <div class="tricolor-bar">
+    <div class="orange"></div>
+    <div class="white"></div>
+    <div class="green"></div>
+  </div>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <div class="tag">System Modules &amp; Live Prototype</div>
+      <h1>Prototype Walkthrough: EcoSync Tri-Tier Ecosystem</h1>
+      <p>Seamless Digital Public Infrastructure bridging Citizens, Ground Enforcement, and Apex Regulatory Bodies</p>
+    </div>
+    <div class="header-right">
+      <div class="live-badge">
+        <span class="live-dot"></span>
+        LIVE RUNNING PROTOTYPE
+      </div>
+      <div class="url">ecosync-vert.vercel.app</div>
+    </div>
+  </div>
+
+  <!-- 3-Column Cards Grid -->
+  <div class="grid-container">
+
+    <!-- Card 1: Tourist Portal -->
+    <div class="card card-tourist">
+      <div class="card-header">
+        <div class="card-title-group">
+          <div class="card-icon">🌿</div>
+          <div class="card-title">Tourist Dynamic Portal</div>
+        </div>
+        <span class="card-pill">Citizen Access</span>
+      </div>
+
+      <div class="screenshot-frame">
+        <img src="file:///C:/Users/tejag/.gemini/antigravity/brain/1a7e7d2b-badf-4e57-9358-343fe19131a1/tourist_portal.png" alt="Tourist Portal">
+      </div>
+
+      <ul class="feature-list">
+        <li class="feature-item">
+          <span class="feature-bullet">✓</span>
+          <div><strong>Live PostGIS Carrying Capacity:</strong> Real-time quota discovery across Hill Stations and Biospheres.</div>
+        </li>
+        <li class="feature-item">
+          <span class="feature-bullet">✓</span>
+          <div><strong>Micro-Spot Granularity:</strong> Prevents overcrowding at specific sub-attractions with live crowd gauges.</div>
+        </li>
+        <li class="feature-item">
+          <span class="feature-bullet">✓</span>
+          <div><strong>Dynamic Rotating QR:</strong> Ed25519 cryptographic token rotating every 30s to prevent pass screenshots.</div>
+        </li>
+        <li class="feature-item">
+          <span class="feature-bullet">✓</span>
+          <div><strong>Weather &amp; Yield Incentives:</strong> 20% carrying-capacity discount redirecting tourists from high-demand zones.</div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Card 2: Checkpost & FASTag Edge -->
+    <div class="card card-guard">
+      <div class="card-header">
+        <div class="card-title-group">
+          <div class="card-icon">🛂</div>
+          <div class="card-title">Checkpost Edge Node</div>
+        </div>
+        <span class="card-pill">Field Enforcement</span>
+      </div>
+
+      <div class="screenshot-frame">
+        <img src="file:///C:/Users/tejag/.gemini/antigravity/brain/1a7e7d2b-badf-4e57-9358-343fe19131a1/authority_multimodal_transport.png" alt="Checkpost & Transport">
+      </div>
+
+      <ul class="feature-list">
+        <li class="feature-item">
+          <span class="feature-bullet">✓</span>
+          <div><strong>Sub-Second Camera Scanning:</strong> Optical QR verification with instant public-key cryptographic checks.</div>
+        </li>
+        <li class="feature-item">
+          <span class="feature-bullet">✓</span>
+          <div><strong>Zero Network Dependency:</strong> Works 100% offline during high-altitude Himalayan cellular dropouts.</div>
+        </li>
+        <li class="feature-item">
+          <span class="feature-bullet">✓</span>
+          <div><strong>FASTag RFID Integration:</strong> Automated barrier lift simulation via NHAI NETC transponder webhooks.</div>
+        </li>
+        <li class="feature-item">
+          <span class="feature-bullet">✓</span>
+          <div><strong>Audit Trail Logging:</strong> Immutable timestamp logging with offline-first synchronization upon reconnect.</div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Card 3: Authority Command Matrix -->
+    <div class="card card-authority">
+      <div class="card-header">
+        <div class="card-title-group">
+          <div class="card-icon">🛡</div>
+          <div class="card-title">Authority Command Center</div>
+        </div>
+        <span class="card-pill">Apex Governance</span>
+      </div>
+
+      <div class="screenshot-frame">
+        <img src="file:///C:/Users/tejag/.gemini/antigravity/brain/1a7e7d2b-badf-4e57-9358-343fe19131a1/authority_dashboard.png" alt="Authority Dashboard">
+      </div>
+
+      <ul class="feature-list">
+        <li class="feature-item">
+          <span class="feature-bullet">✓</span>
+          <div><strong>Real-Time Headcount Matrix:</strong> Aggregated live occupancy, safe capacity thresholds, and risk levels.</div>
+        </li>
+        <li class="feature-item">
+          <span class="feature-bullet">✓</span>
+          <div><strong>Multimodal Inflow Telemetry:</strong> Live Toy Train passenger rakes, State Bus fleets, and vehicle dwell times.</div>
+        </li>
+        <li class="feature-item">
+          <span class="feature-bullet">✓</span>
+          <div><strong>Emergency Lockdown Kill-Switch:</strong> Instant containment protocols under Environment Protection Act 1986.</div>
+        </li>
+        <li class="feature-item">
+          <span class="feature-bullet">✓</span>
+          <div><strong>Live Scan Feed Audit:</strong> Millisecond inspection of verified entries, clock-drift rejections, and toll gates.</div>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Bottom Highlight Strip -->
+  <div class="bottom-strip">
+    <div class="highlight-badge">
+      <span class="star">★</span>
+      <div>
+        <span class="highlight-title">Core Innovation:</span>
+        <span class="highlight-text">Asymmetric Ed25519 Offline Pass Verification + FASTag RFID Zero-Friction Flow</span>
+      </div>
+    </div>
+    <div class="highlight-stats">
+      <div class="stat-item">
+        <span class="stat-val">&lt; 300 ms</span>
+        <span class="stat-label">Edge Scan Latency</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-val">100%</span>
+        <span class="stat-label">Offline Integrity</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-val">30s</span>
+        <span class="stat-label">Anti-Clone QR Epoch</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-val">0 ₹</span>
+        <span class="stat-label">New Hardware Cost</span>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

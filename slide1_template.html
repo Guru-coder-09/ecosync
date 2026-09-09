@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Slide 1 - EcoSync Title & Overview</title>
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  }
+  body {
+    background: radial-gradient(circle at 80% 20%, #151D4A 0%, #0B0F2A 60%, #060919 100%);
+    color: #FFFFFF;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 60px 80px 45px 80px;
+    position: relative;
+  }
+
+  /* Tricolor accent bar */
+  .tricolor-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    display: flex;
+  }
+  .tricolor-bar .orange { flex: 1; background: #FF671F; }
+  .tricolor-bar .white { flex: 1; background: #FFFFFF; }
+  .tricolor-bar .green { flex: 1; background: #046A38; }
+
+  /* Top badge bar */
+  .top-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+  .sih-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 103, 31, 0.12);
+    border: 1px solid rgba(255, 103, 31, 0.4);
+    color: #FFA066;
+    padding: 8px 18px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+  .ministry-tag {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 8px 20px;
+    border-radius: 30px;
+    color: #94A3B8;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  /* Main Hero Layout */
+  .hero-container {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 60px;
+    align-items: center;
+    flex: 1;
+  }
+
+  /* Left Hero Content */
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .logo-line {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 20px;
+  }
+  .logo-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #FF671F 0%, #FF9E66 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    box-shadow: 0 10px 25px rgba(255, 103, 31, 0.4);
+  }
+  .brand-name {
+    font-size: 58px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    background: linear-gradient(135deg, #FFFFFF 0%, #E2E8F0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1;
+  }
+  .brand-badge {
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    color: #34D399;
+    font-size: 12px;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-left: 8px;
+  }
+
+  .hero-title {
+    font-size: 44px;
+    font-weight: 800;
+    line-height: 1.15;
+    color: #F8FAFC;
+    margin-bottom: 20px;
+    letter-spacing: -0.5px;
+  }
+  .hero-title span {
+    background: linear-gradient(135deg, #38BDF8 0%, #818CF8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero-desc {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #94A3B8;
+    margin-bottom: 35px;
+    max-width: 780px;
+  }
+
+  /* Pillar Cards Row */
+  .pillars-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 35px;
+  }
+  .pillar-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .pillar-title {
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .p-1 { color: #38BDF8; }
+  .p-2 { color: #34D399; }
+  .p-3 { color: #FBBF24; }
+  .pillar-desc {
+    font-size: 13px;
+    color: #CBD5E1;
+    line-height: 1.3;
+  }
+
+  /* Team Info Footer */
+  .team-block {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .team-item {
+    display: flex;
+    flex-direction: column;
+  }
+  .team-item .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #64748B;
+    font-weight: 700;
+  }
+  .team-item .val {
+    font-size: 15px;
+    font-weight: 700;
+    color: #E2E8F0;
+    margin-top: 2px;
+  }
+
+  /* Right Visual Composition */
+  .hero-right {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+  }
+
+  .preview-stack {
+    position: relative;
+    width: 100%;
+    height: 480px;
+  }
+
+  .preview-card-bg {
+    position: absolute;
+    width: 88%;
+    height: 380px;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    transition: all 0.3s;
+  }
+  .preview-card-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+  }
+  .preview-back {
+    top: 0;
+    right: 0;
+    transform: rotate(2deg);
+    opacity: 0.75;
+    filter: brightness(0.85);
+  }
+  .preview-front {
+    bottom: 0;
+    left: 0;
+    transform: rotate(-2deg);
+    z-index: 2;
+    border: 2px solid rgba(56, 189, 248, 0.4);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
+  }
+
+  /* Floating Metric Chips */
+  .floating-chip {
+    position: absolute;
+    background: rgba(13, 20, 50, 0.9);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 12px 18px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+    z-index: 10;
+  }
+  .chip-1 {
+    top: -15px;
+    left: 20px;
+  }
+  .chip-2 {
+    bottom: -15px;
+    right: 20px;
+  }
+  .chip-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+  .c-icon-1 { background: rgba(16, 185, 129, 0.2); color: #34D399; }
+  .c-icon-2 { background: rgba(56, 189, 248, 0.2); color: #38BDF8; }
+  .chip-content {
+    display: flex;
+    flex-direction: column;
+  }
+  .chip-val {
+    font-size: 16px;
+    font-weight: 800;
+    color: #FFFFFF;
+  }
+  .chip-label {
+    font-size: 11px;
+    color: #94A3B8;
+  }
+
+  /* Bottom live link pill */
+  .bottom-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .prototype-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: #34D399;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: monospace;
+  }
+  .live-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10B981;
+    box-shadow: 0 0 8px #10B981;
+  }
+  .disclaimer {
+    font-size: 12px;
+    color: #64748B;
+  }
+</style>
+</head>
+<body>
+
+  <!-- Tricolor Indian DPI Bar -->
+  <div class="tricolor-bar">
+    <div class="orange"></div>
+    <div class="white"></div>
+    <div class="green"></div>
+  </div>
+
+  <!-- Top Metadata Bar -->
+  <div class="top-meta">
+    <div class="sih-badge">
+      <span>🇮🇳</span> SMART INDIA HACKATHON 2024
+    </div>
+    <div class="ministry-tag">
+      <span>🏛 Ministry of Environment, Forest and Climate Change &bull; Ministry of Tourism</span>
+    </div>
+  </div>
+
+  <!-- Hero Container -->
+  <div class="hero-container">
+
+    <!-- Left Column: Title & Description -->
+    <div class="hero-left">
+      <div class="logo-line">
+        <div class="logo-icon">🌿</div>
+        <div class="brand-name">EcoSync</div>
+        <span class="brand-badge">National DPI</span>
+      </div>
+
+      <h2 class="hero-title">
+        Autonomous Ecological <span>Carrying Capacity</span> &amp; Multimodal Inflow Governance
+      </h2>
+
+      <p class="hero-desc">
+        A decentralized Digital Public Infrastructure (DPI) regulating tourist and vehicular influx into Ecologically Sensitive Zones (ESZ) using Ed25519 offline cryptography, dynamic 30-second rotating e-permits, and automated NHAI FASTag barrier nodes.
+      </p>
+
+      <!-- 3 Pillar Highlights -->
+      <div class="pillars-row">
+        <div class="pillar-card">
+          <span class="pillar-title p-1">1. Autonomous Quotas</span>
+          <span class="pillar-desc">Real-time PostGIS geofencing and carrying-capacity load balancing.</span>
+        </div>
+        <div class="pillar-card">
+          <span class="pillar-title p-2">2. Offline Cryptography</span>
+          <span class="pillar-desc">Ed25519 asymmetric verification with 30s rotating TOTP anti-cloning.</span>
+        </div>
+        <div class="pillar-card">
+          <span class="pillar-title p-3">3. Zero-Friction Flow</span>
+          <span class="pillar-desc">Leverages existing NHAI FASTag RFID network with ₹0 new toll hardware.</span>
+        </div>
+      </div>
+
+      <!-- Team Details Block -->
+      <div class="team-block">
+        <div class="team-item">
+          <span class="label">Project Theme</span>
+          <span class="val">Smart Governance &amp; Sustainable Tourism</span>
+        </div>
+        <div class="team-item">
+          <span class="label">Technology Stack</span>
+          <span class="val">React 18 &bull; FastAPI &bull; Ed25519 &bull; FASTag RFID</span>
+        </div>
+        <div class="team-item">
+          <span class="label">Deployment Status</span>
+          <span class="val">Live Running Cloud Prototype (Edge CDN)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Visual Mockup Stack -->
+    <div class="hero-right">
+      <div class="preview-stack">
+        <!-- Back Card: Authority Dashboard -->
+        <div class="preview-card-bg preview-back">
+          <img src="file:///C:/Users/tejag/.gemini/antigravity/brain/1a7e7d2b-badf-4e57-9358-343fe19131a1/authority_dashboard.png" alt="Authority Dashboard">
+        </div>
+        <!-- Front Card: Tourist Portal -->
+        <div class="preview-card-bg preview-front">
+          <img src="file:///C:/Users/tejag/.gemini/antigravity/brain/1a7e7d2b-badf-4e57-9358-343fe19131a1/tourist_portal.png" alt="Tourist Portal">
+        </div>
+
+        <!-- Floating Chips -->
+        <div class="floating-chip chip-1">
+          <div class="chip-icon c-icon-1">🔒</div>
+          <div class="chip-content">
+            <span class="chip-val">100% Offline</span>
+            <span class="chip-label">Zero Network Checkpost Validation</span>
+          </div>
+        </div>
+
+        <div class="floating-chip chip-2">
+          <div class="chip-icon c-icon-2">🚗</div>
+          <div class="chip-content">
+            <span class="chip-val">FASTag NETC</span>
+            <span class="chip-label">Automated Toll Barrier Lifts</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="bottom-bar">
+    <div class="prototype-pill">
+      <span class="live-dot"></span>
+      https://ecosync-vert.vercel.app
+    </div>
+    <div class="disclaimer">
+      Government of India &bull; Ministry of Environment, Forest and Climate Change DPI Prototype &bull; Version 2.4.0
+    </div>
+  </div>
+
+</body>
+</html>

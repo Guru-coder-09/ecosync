@@ -38,7 +38,9 @@ export const AuthorityDashboard = () => {
   const [killSwitchModal, setKillSwitchModal] = useState<number | null>(null);
   const [permits, setPermits] = useState<PermitRecord[]>([]);
   const [transportFlow, setTransportFlow] = useState<TransportFlow | null>(null);
-  const [activeTab, setActiveTab] = useState<'OVERVIEW' | 'TRANSPORT' | 'PERMITS'>('OVERVIEW');
+  const queryParams = new URLSearchParams(window.location.search);
+  const initialTab = (queryParams.get('tab')?.toUpperCase() as 'OVERVIEW' | 'TRANSPORT' | 'PERMITS') || 'OVERVIEW';
+  const [activeTab, setActiveTab] = useState<'OVERVIEW' | 'TRANSPORT' | 'PERMITS'>(initialTab);
 
   useEffect(() => {
     fetchData();
