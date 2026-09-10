@@ -75,13 +75,18 @@ export const ZoneSelector = () => {
   const [showPrevious, setShowPrevious] = useState(false);
   const [loadingPermits, setLoadingPermits] = useState(false);
 
+  const [restrictedAlert, setRestrictedAlert] = useState<{name: string, status: string} | null>(null);
+
   const handleLogout = () => {
     logout();
     navigate('/');
   };
 
   const handleZoneClick = (zone: typeof ZONE_CARDS[0]) => {
-    if (zone.status === 'LOCKDOWN') return;
+    if (zone.status === 'LOCKDOWN' || zone.status === 'RESTRICTED') {
+      setRestrictedAlert({ name: zone.name, status: zone.status });
+      return;
+    }
     navigate(`/tourist/apply?zoneId=${zone.id}&zoneName=${encodeURIComponent(zone.name)}&state=${encodeURIComponent(zone.state)}`);
   };
 
@@ -261,6 +266,41 @@ export const ZoneSelector = () => {
           </div>
         )}
       </div>
+
+      {/* Restricted / Lockdown Disclaimer Modal */}
+      {restrictedAlert && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl p-6 max-w-sm w-full border border-gray-100 relative animate-in zoom-in-95 duration-200">
+            <div className="flex flex-col items-center text-center">
+              <div className={`w-14 h-14 rounded-full flex items-center justify-center mb-4 ${
+                restrictedAlert.status === 'LOCKDOWN' ? 'bg-red-100 text-red-600' : 'bg-orange-100 text-orange-600'
+              }`}>
+                <span className="text-2xl">⚠</span>
+              </div>
+              <h3 className="font-extrabold text-lg text-gray-900 mb-1">Capacity Exceeded</h3>
+              <p className="text-sm font-semibold text-gray-700">{restrictedAlert.name} is currently <span className={restrictedAlert.status === 'LOCKDOWN' ? 'text-red-600' : 'text-orange-600'}>{restrictedAlert.status}</span>.</p>
+              <p className="text-xs text-gray-500 mt-3 mb-6">
+                No new entry permits can be booked for this destination at the moment. Please check the <strong>Live Zone Status</strong> dashboard to explore alternative routes and wait times.
+              </p>
+              
+              <div className="w-full space-y-3">
+                <button
+                  onClick={() => navigate('/tourist')}
+                  className="w-full bg-[#1A237E] hover:bg-[#283593] text-white font-bold py-3 rounded-xl transition-all shadow-sm flex justify-center items-center gap-2 text-sm"
+                >
+                  <Clock className="w-4 h-4" /> Check Live Status
+                </button>
+                <button
+                  onClick={() => setRestrictedAlert(null)}
+                  className="w-full bg-white hover:bg-gray-50 text-gray-600 font-bold py-2.5 rounded-xl border border-gray-200 transition-all text-sm"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
